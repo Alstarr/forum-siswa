@@ -15,7 +15,7 @@ export default function AppRoutes() {
         <MainLayout>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/form" element={<KritikForm />} />
+            <Route path="/kritik" element={<KritikForm />} />
             <Route path="/harapan" element={<HarapanForm />} />
             <Route path="/perundungan" element={<BullyingForm />} />
             {/* <Route path="/thanks" element={<Thanks />} />

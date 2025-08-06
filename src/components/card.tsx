@@ -8,7 +8,7 @@ export default function ForumSection() {
     {
       title: "Forum Saran dan Kritik",
       desc: "Kami mengajak seluruh siswa untuk menyampaikan kritik dan saran demi kemajuan sekolah serta kinerja OSIS secara transparan. Pendapat Anda sangat berarti untuk menjadikan perubahan positif!",
-      href: "/form",
+      href: "/kritik",
       img: form1,
       delay: 0,
       alt: "Kritik",
@@ -71,7 +71,7 @@ export default function ForumSection() {
               </div>
 
               {/* Gambar absolute tetap */}
-              <div className="absolute bottom-10 left-160 w-full h-[190px]">
+              <div className="absolute bottom-10 left-160 w-full h-[190px] lg:block hidden">
                 <motion.img
                   src={item.img}
                   alt={item.alt}

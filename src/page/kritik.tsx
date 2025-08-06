@@ -18,9 +18,9 @@ export default function Kritik() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleSubmit = (e?: React.FormEvent | React.MouseEvent) => {
+  const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
     if (e) e.preventDefault();
-
+  
     if (!pesan.trim()) {
       toast.error("⚠️ Pesan tidak boleh kosong!", {
         icon: <MdError className="text-red-600 text-xl" />,
@@ -31,23 +31,39 @@ export default function Kritik() {
       });
       return;
     }
-
+  
     const loadingToast = toast.loading("Mengirim pesan...");
-
-    setTimeout(() => {
-      toast.dismiss(loadingToast);
-      toast.success("Pesan berhasil dikirim!", {
-        icon: <MdCheckCircle className="text-green-600 text-xl" />,
-        style: {
-          background: "#d1fae5",
-          color: "#065f46",
-        },
+  
+    try {
+      const response = await fetch("http://localhost:5000/api/kritik/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isi_laporan: pesan }),
       });
-
-      setPesan(""); // reset isi
-      navigate("/#home");
-    }, 2000);
+  
+      const data = await response.json();
+  
+      toast.dismiss(loadingToast);
+  
+      if (response.ok) {
+        toast.success("Pesan berhasil dikirim!", {
+          icon: <MdCheckCircle className="text-green-600 text-xl" />,
+          style: { background: "#d1fae5", color: "#065f46" },
+        });
+        setPesan("");
+        navigate("/#home");
+      } else {
+        throw new Error(data.error || "Terjadi kesalahan.");
+      }
+    } catch (error) {
+      toast.dismiss(loadingToast);
+      toast.error("❌ Gagal mengirim pesan!", {
+        icon: <MdError className="text-red-600 text-xl" />,
+        style: { background: "#fee2e2", color: "#991b1b" },
+      });
+    }
   };
+  
 
   return (
     <section
@@ -90,7 +106,7 @@ export default function Kritik() {
             <motion.img
               src={kritikImg}
               alt="Anggota OSIS"
-              className="w-[130px] object-contain"
+              className="w-[150px] object-contain"
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}

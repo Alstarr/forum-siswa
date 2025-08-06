@@ -1,13 +1,13 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import AppAdmin from "./AppAdmin.tsx";
-import "./index.css";
+import App from "./App"; // Komponen App utama untuk user
+import "./index.css"; // Atur global style Tailwind atau CSS lain
 
-createRoot(document.getElementById("root-admin")!).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById("root-user")!).render(
+  <React.StrictMode>
     <BrowserRouter>
-      <AppAdmin />
+      <App />
     </BrowserRouter>
-  </StrictMode>
+  </React.StrictMode>
 );

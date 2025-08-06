@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Jul 2025 pada 06.03
+-- Waktu pembuatan: 25 Jul 2025 pada 06.21
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `bm3_forum`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `admin`
+--
+
+INSERT INTO `admin` (`id`, `email`, `password`, `created_at`) VALUES
+(1, 'forum_bm3@sch.id', 'admin1234#', '2025-07-22 06:22:23');
 
 -- --------------------------------------------------------
 
@@ -86,6 +106,13 @@ INSERT INTO `perundungan` (`id_perundungan`, `isi_laporan`, `created_at`) VALUES
 --
 
 --
+-- Indeks untuk tabel `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Indeks untuk tabel `harapan`
 --
 ALTER TABLE `harapan`
@@ -106,6 +133,12 @@ ALTER TABLE `perundungan`
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `harapan`

@@ -18,7 +18,7 @@ export default function Harapan() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleSubmit = (e?: React.FormEvent | React.MouseEvent) => {
+  const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
     if (e) e.preventDefault();
 
     if (!pesan.trim()) {
@@ -34,19 +34,37 @@ export default function Harapan() {
 
     const loadingToast = toast.loading("Mengirim pesan...");
 
-    setTimeout(() => {
-      toast.dismiss(loadingToast);
-      toast.success("Pesan berhasil dikirim!", {
-        icon: <MdCheckCircle className="text-green-600 text-xl" />,
-        style: {
-          background: "#d1fae5",
-          color: "#065f46",
-        },
+    try {
+      const response = await fetch("http://localhost:5000/api/harapan/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify({ isi_laporan: pesan}),
       });
 
-      setPesan(""); // reset isi
-      navigate("/#home");
-    }, 2000);
+      const data = await response.json();
+
+      toast.dismiss(loadingToast);
+
+      if (response.ok) {
+        toast.success("Pesan berhasil dikirim!", {
+          icon: <MdCheckCircle className="text-green-600 text-xl"/>,
+          style: {background: "#d1fae5", color: "#065f46"},
+        });
+        setPesan("");
+        navigate("/#home");
+      } else {
+        throw new Error(data.error || "Terjadi kesalahan.");
+      }
+    } catch (error) {
+      toast.dismiss(loadingToast);
+      toast.error("❌ Gagal mengirim pesan!", {
+        icon: <MdError className="text-red-600 text-xl" />,
+        style: {
+          background: "#fee2e2",
+          color: "#991b1b",
+        },
+      });
+    }
   };
 
   return (
@@ -90,7 +108,7 @@ export default function Harapan() {
             <motion.img
               src={hrpImg}
               alt="Anggota OSIS"
-              className="w-[150px] object-contain"
+              className="w-[170px] object-contain"
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
@@ -100,7 +118,7 @@ export default function Harapan() {
             <motion.img
               src={hrpImg}
               alt="Anggota OSIS"
-              className="max-w-[340px] object-contain"
+              className="max-w-[420px] object-contain"
               initial={{ y: 5, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
@@ -108,7 +126,7 @@ export default function Harapan() {
           </div>
         </div>
 
-        {/* Form Kritik */}
+        {/* Form harapan */}
         <div className="flex flex-col justify-center items-center space-y-6 w-full order-2 md:order-none z-10 mt-15">
           <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4 w-full">
             <textarea

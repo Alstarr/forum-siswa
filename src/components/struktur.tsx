@@ -111,7 +111,7 @@ export default function StrukturOsis() {
               initial={{ y: 10, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
             >
               Ade Maulana Sajal, S.E
               <br />
@@ -130,7 +130,7 @@ export default function StrukturOsis() {
               initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 + idx * 0.2 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
               className="relative flex flex-col items-center w-[360px]"
             >
               <motion.img
@@ -140,14 +140,14 @@ export default function StrukturOsis() {
                 initial={{ scale: 0.7, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 + idx * 0.1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
               />
               <motion.div
                 className="mt-[-55px] bg-gradient-to-r from-[#4CA965] to-[#59C274] text-[#FCED75] text-center px-4 py-2 rounded-xl text-sm font-semibold z-20 shadow-lg"
                 initial={{ y: 10, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: 0.6 + idx * 0.1 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
               >
                 {idx === 0 ? "Regina Nathalia Valencia" : "M. Farrel Setiawan Putra"}
                 <br />
