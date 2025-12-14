@@ -1,31 +1,18 @@
-const db = require('../config/db');
+import { db } from '../db.js';
+import { perundungan } from '../../src/db/schema.js';
+import { eq } from 'drizzle-orm';
 
-exports.getAllPerundungan = (req, res) => {
-  db.query('SELECT * FROM perundungan ORDER BY created_at DESC', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results); // PENTING: balikin ARRAY langsung!
-  });
-};
+export const InsertPerundungan = async (req, res) => {
+    try {
+        const { isi_laporan } = req.body;
+        const created_at = new Date().toISOString();
 
-exports.getPerundunganCount = (req, res) => {
-  db.query("SELECT COUNT(*) AS count FROM perundungan", (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ count: results[0].count });
-  });
-};
-
-exports.uploadPerundungan = (req, res) => {
-  const { isi_laporan} = req.body;
-  
-  if (!isi_laporan || isi_laporan.trim() === "") {
-    return res.status(400).json({ error: "Pesan tidak boleh kosong"});
-  }
-
-  db.query("INSERT INTO perundungan (isi_laporan, created_at) VALUES (?, NOW())", [isi_laporan], (err, result) => {
-    if (err) {
-      console.error("Error insert form perundungan:", err);
-      return res.status(500).json({ error: "Gagal menyimpan form perundungan"});
+        await db.insert(perundungan).values({
+            isi_laporan,
+            created_at
+        });
+        res.status(201).json({ message: 'Laporan perundungan berhasil disimpan.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Terjadi kesalahan saat menyimpan laporan perundungan.' });
     }
-    res.status(201).json({ success: true, message: "Form perundungan berhasil dikirim"});
-  });
-};
+}

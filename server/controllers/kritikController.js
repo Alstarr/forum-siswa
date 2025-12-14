@@ -1,31 +1,19 @@
-const db = require('../config/db');
+import { db } from "../db.js";
+import { kritik } from "../../src/db/schema.js";
+import { eq } from "drizzle-orm";
 
-exports.getAllKritik = (req, res) => {
-  db.query('SELECT * FROM kritik ORDER BY created_at DESC', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results); // PENTING: balikin ARRAY langsung!
-  });
-};
+export const InsertKritik = async (req, res) => {
+    try {
+        const { isi_laporan } = req.body;
+        const created_at = new Date().toISOString();
 
-exports.getKritikCount = (req, res) => {
-  db.query('SELECT COUNT(*) AS count FROM kritik', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ count: results[0].count });
-  });
-};
-  
-exports.uploadKritik = (req, res) => {
-  const { isi_laporan } = req.body;
-
-  if (!isi_laporan || isi_laporan.trim() === "") {
-    return res.status(400).json({ error: "Pesan tidak boleh kosong" });
-  }
-
-  db.query("INSERT INTO kritik (isi_laporan, created_at) VALUES (?, NOW())", [isi_laporan], (err, result) => {
-    if (err) {
-      console.error("Error insert kritik:", err);
-      return res.status(500).json({ error: "Gagal menyimpan kritik" });
+        await db.insert(kritik).values({
+            isi_laporan,
+            created_at
+        })
+        res.json({ message: "Kritik received", data: isi_laporan });
+    } catch (error) {
+        console.error("Error inserting kritik:", error);
+        res.status(500).json({ error: "Failed to insert kritik" });
     }
-    res.status(201).json({ success: true, message: "Kritik berhasil dikirim" });
-  });
-};
+}

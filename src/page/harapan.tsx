@@ -41,7 +41,7 @@ export default function Harapan() {
     const loadingToast = toast.loading("Mengirim pesan...");
 
     try {
-      const response = await fetch("http://localhost:5000/api/harapan/upload", {
+      const response = await fetch("http://localhost:5000/harapan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isi_laporan: pesan }),
@@ -201,6 +201,7 @@ export default function Harapan() {
                   <div className="relative">
                     <motion.textarea
                       ref={textareaRef}
+                      name="isi_laporan"
                       value={pesan}
                       onChange={(e) => {
                         const val = e.target.value;

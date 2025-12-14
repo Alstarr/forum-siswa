@@ -33,7 +33,7 @@ export default function Perundungan() {
     const loadingToast = toast.loading("Mengirim pesan...");
 
     try {
-      const response = await fetch("http://localhost:5000/api/perundungan/upload", {
+      const response = await fetch("http://localhost:5000/perundungan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isi_laporan: pesan }),

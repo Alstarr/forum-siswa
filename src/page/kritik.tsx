@@ -34,7 +34,7 @@ export default function Kritik() {
     const loadingToast = toast.loading("Mengirim pesan...");
 
     try {
-      const response = await fetch("http://localhost:5000/api/kritik/upload", {
+      const response = await fetch("http://localhost:5000/kritik", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isi_laporan: pesan }),

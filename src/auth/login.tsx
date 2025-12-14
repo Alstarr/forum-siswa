@@ -3,7 +3,16 @@ import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../admin/context/AuthContext';
+interface Admin {
+  id: number;
+  email: string;
+}
 
+interface LoginResponse {
+  token: string;
+  admin: Admin;
+  message: string;
+}
 export default function LoginPage (){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,30 +27,42 @@ export default function LoginPage (){
     return re.test(email);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-  
-    fetch("http://localhost:5000/api/login", {
+const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setIsLoading(true);
+
+  try {
+    const res = await fetch("http://localhost:5000/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ email, password }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          toast.success("Login berhasil!");
-          login(); // update context & simpan ke localStorage
-          navigate("/admin");
-        } else {
-          toast.error(data.message || "Email atau password salah");
-        }
-      })
-      .catch(() => {
-        toast.error("Terjadi kesalahan server");
-      })
-      .finally(() => setIsLoading(false));
-  };
+    });
+
+    const data: LoginResponse = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.message || "Email atau password salah");
+      return;
+    }
+
+    // ✅ Simpan token
+    localStorage.setItem("token", data.token);
+
+    // ✅ Update auth context
+    login(data.admin);
+
+    toast.success("Login berhasil");
+    navigate("/admin");
+
+  } catch (error) {
+    toast.error("Server tidak bisa diakses");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const isFormValid = isValidEmail(email) && password.length >= 6;
 
