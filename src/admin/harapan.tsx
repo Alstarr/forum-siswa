@@ -115,7 +115,7 @@ const handleDelete = async (id: number): Promise<void> => {
                   onClick={() => handleDelete(harapan.id_harapan)}
                   className="bg-red-500 text-white px-3 py-1 rounded mt-4 w-full rounded-2xl"
                 >
-                  Hapus
+                  Take Down!
                 </button>
           </Link>
         ))}
