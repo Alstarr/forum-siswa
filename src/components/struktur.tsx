@@ -27,17 +27,17 @@ export default function StrukturOsis() {
     {
       img: pakade,
       name: "Ade Maulana Sajal, S.E",
-      role: "Pembina OSIS Generasi 9",
+      role: "Pembina OSIS Generasi 10",
     },
     {
       img: regina,
       name: "Regina Nathalia Valencia",
-      role: "Ketua OSIS Generasi 9",
+      role: "Ketua OSIS Generasi 10",
     },
     {
       img: farrel,
       name: "M. Farrel Setiawan Putra",
-      role: "Wakil Ketua OSIS Generasi 9",
+      role: "Wakil Ketua OSIS Generasi 10",
     },
   ];
 

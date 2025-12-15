@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import form1 from "../assets/image/osis/form1.png";
-import form2 from "../assets/image/osis/form2.png";
-import form3 from "../assets/image/osis/form3.png";
+import form1 from "../assets/image/osis/1.3.png";
+import form2 from "../assets/image/osis/2.2.png";
+import form3 from "../assets/image/osis/1.1.png";
 
 export default function ForumSection() {
   const forums = [
@@ -71,7 +71,7 @@ export default function ForumSection() {
               </div>
 
               {/* Gambar absolute tetap */}
-              <div className="absolute bottom-10 left-160 w-full h-[190px] lg:block hidden">
+              <div className="absolute bottom-90 left-160 w-full h-0 lg:block hidden">
                 <motion.img
                   src={item.img}
                   alt={item.alt}

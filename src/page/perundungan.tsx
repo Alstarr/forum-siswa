@@ -4,7 +4,7 @@ import { MdCheckCircle, MdError, MdSend, MdOutlineFeedback } from "react-icons/m
 import { toast } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 
-import blyImg from "../assets/image/osis/form3.1.png";
+import blyImg from "../assets/image/osis/2.1.png";
 
 export default function Perundungan() {
   const [pesan, setPesan] = useState("");

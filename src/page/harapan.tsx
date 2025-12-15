@@ -9,7 +9,7 @@ import {
 import { toast } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 
-import hrpImg from "../assets/image/osis/form2.1.png";
+import hrpImg from "../assets/image/osis/1.4.png";
 
 export default function Harapan() {
   const [pesan, setPesan] = useState("");
