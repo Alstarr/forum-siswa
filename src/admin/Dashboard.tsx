@@ -11,19 +11,19 @@ export default function Dashboard() {
   useEffect(() => {
     setPageTitle("Dashboard");
 
-    fetch("http://localhost:5000/api/kritik/count")
+    fetch("http://localhost:5000/admin/total-kritik")
       .then((res) => res.json())
-      .then((data) => setKritikCount(data.count))
+      .then((data) => setKritikCount(data.total))
       .catch((err) => console.error("Error get kritik:", err));
 
-    fetch("http://localhost:5000/api/harapan/count")
+    fetch("http://localhost:5000/admin/total-harapan")
       .then((res) => res.json())
-      .then((data) => setHarapanCount(data.count))
+      .then((data) => setHarapanCount(data.total))
       .catch((err) => console.error("Error get harapan:", err));
 
-    fetch("http://localhost:5000/api/perundungan/count")
+    fetch("http://localhost:5000/admin/total-perundungan")
       .then((res) => res.json())
-      .then((data) => setPerundunganCount(data.count))
+      .then((data) => setPerundunganCount(data.total))
       .catch((err) => console.error("Error get perundungan:", err));
   }, [setPageTitle]);
 

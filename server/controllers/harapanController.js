@@ -17,3 +17,34 @@ export const InsertHarapan = async (req, res) => {
         res.status(500).json({ error: "Failed to insert harapan" });
     }
 }
+
+export const GetHarapan = async (req, res) => {
+    try {
+        const harapanList = await db.select().from(harapan);
+        res.json(harapanList);
+    } catch (error) {
+        console.error("Error fetching harapan:", error);}
+}
+
+export const deleteHarapan = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "ID tidak valid" });
+    }
+
+    const result = await db
+      .delete(harapan)
+      .where(eq(harapan.id_harapan, Number(id)));
+
+    if (result.rowsAffected === 0) {
+      return res.status(404).json({ message: "Data tidak ditemukan" });
+    }
+
+    res.json({ message: "Data berhasil dihapus" });
+  } catch (error) {
+    console.error("Delete error:", error);
+    res.status(500).json({ message: "Gagal menghapus data" });
+  }
+};

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { PageTitleContext, AdminPage } from "./context/PageTitleContext";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 interface Perundungan {
   id_perundungan: number;
@@ -16,7 +17,7 @@ export default function Perundungan() {
   useEffect(() => {
     setPageTitle(AdminPage.PERUNDUNGAN);
 
-    fetch("http://localhost:5000/api/perundungan")
+    fetch("http://localhost:5000/admin/perundungan")
       .then((res) => res.json())
       .then((data) => {
         console.log("Perundungan:", data);
@@ -31,6 +32,43 @@ export default function Perundungan() {
       })
       .finally(() => setIsLoading(false));
   }, [setPageTitle]);
+
+   type DeleteResponse = {
+  message: string;
+};
+
+const handleDelete = async (id: number): Promise<void> => {
+  const isConfirmed: boolean = window.confirm(
+    "Yakin ingin menghapus data ini?"
+  );
+
+  if (!isConfirmed) return;
+
+  try {
+    const res: Response = await fetch(
+      `http://localhost:5000/admin/delete/perundungan/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const data: DeleteResponse = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.message || "Gagal menghapus data");
+      return;
+    }
+
+    toast.success("Data berhasil dihapus");
+    Perundungan(); // refresh data
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      toast.error(error.message);
+    } else {
+      toast.error("Gagal terhubung ke server");
+    }
+  }
+};
 
   return (
     <section className="p-6">
@@ -75,6 +113,12 @@ export default function Perundungan() {
                 Laporan
               </span>
             </div>
+            <button
+                  onClick={() => handleDelete(laporan.id_perundungan)}
+                  className="bg-red-500 text-white px-3 py-1 rounded mt-4 w-full rounded-2xl"
+                >
+                  Hapus
+                </button>
           </Link>
         ))}
       </div>

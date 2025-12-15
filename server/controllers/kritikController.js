@@ -17,3 +17,35 @@ export const InsertKritik = async (req, res) => {
         res.status(500).json({ error: "Failed to insert kritik" });
     }
 }
+
+export const Getkritik = async (req, res) => {
+    try {
+        const kritikList = await db.select().from(kritik);
+        res.json(kritikList);
+    } catch (error) {
+        console.error("Error fetching kritik:", error);
+    }
+}
+
+export const deleteKritik = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "ID tidak valid" });
+    }
+
+    const result = await db
+      .delete(kritik)
+      .where(eq(kritik.id_kritik, Number(id)));
+
+    if (result.rowsAffected === 0) {
+      return res.status(404).json({ message: "Data tidak ditemukan" });
+    }
+
+    res.json({ message: "Data berhasil dihapus" });
+  } catch (error) {
+    console.error("Delete error:", error);
+    res.status(500).json({ message: "Gagal menghapus data" });
+  }
+};
