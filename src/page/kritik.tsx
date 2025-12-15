@@ -5,7 +5,7 @@ import { MdCheckCircle, MdError, MdSend, MdOutlineFeedback } from "react-icons/m
 import { toast } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 
-import kritikImg from "../assets/image/osis/form1.1.png";
+import kritikImg from "../assets/image/osis/2.4.png";
 
 export default function Kritik() {
   const [pesan, setPesan] = useState("");
